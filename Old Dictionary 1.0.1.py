@@ -132,7 +132,6 @@ class DictionaryWindow(Gtk.Window):
 		self.hBox = Gtk.HBox()
 		self.notebook = Gtk.Notebook()
 		self.notebook.set_scrollable(True)
-		self.notebook.popup_enable()
 		
 		#self.vBox.pack_start(self.headerBar, True, True, 0)
 		self.vBox.pack_start(self.hBox, True, True, 0)
@@ -148,7 +147,7 @@ class DictionaryWindow(Gtk.Window):
 		self.removeTab.connect("clicked", self.remove_tab)
 		
 		# Add pages
-		self.notebook.append_page(DictionaryObject(self.database, self.notebook), Gtk.Label("Tab1"))
+		self.notebook.append_page(DictionaryObject(self.database, self.notebook), Gtk.Label("New Tab"))
 		
 		
 	def quit_window(self, widget):
@@ -156,9 +155,10 @@ class DictionaryWindow(Gtk.Window):
 		
 	def add_tab(self, widget):
 		tempTab = DictionaryObject(self.database, self.notebook)
-		self.notebook.append_page(tempTab, Gtk.Label("Tab" + str(int(self.notebook.get_n_pages()) + 1)))
+		self.notebook.append_page(tempTab, Gtk.Label("New Tab"))
+		tempPageNum = self.notebook.page_num(tempTab)
 		self.notebook.show_all()
-	
+		self.notebook.set_current_page(tempPageNum)
 	def remove_tab(self, widget):
 		currentPage = self.notebook.get_current_page()
 		self.notebook.remove_page(currentPage)
